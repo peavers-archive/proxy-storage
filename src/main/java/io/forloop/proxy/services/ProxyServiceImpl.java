@@ -53,9 +53,12 @@ public class ProxyServiceImpl implements ProxyService {
         final var strings = new ArrayList<>(List.of(new String(file.getBytes(), StandardCharsets.UTF_8).split("\n")));
 
         // Convert strings into Proxy objects
-        final var results = strings.stream().map(proxyString -> Proxy
+        final var results = strings.stream()
+                .map(s -> s.split(":"))
+                .map(proxyString -> Proxy
                 .builder()
-                .value(proxyString)
+                .host(proxyString[0])
+                .port(Integer.parseInt(proxyString[1].replaceAll("[^0-9]", "")))
                 .build())
                 .collect(Collectors.toCollection(ArrayList::new));
 

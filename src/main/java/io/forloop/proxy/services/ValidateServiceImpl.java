@@ -19,9 +19,9 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public class ValidateServiceImpl implements ValidateService {
 
-    private static final String TEST_ENDPOINT = "https://google.co.nz";
+    private static final String TEST_ENDPOINT = "https://google.com";
 
-    private static final int REQUEST_TIMEOUT = Math.toIntExact(Duration.ofSeconds(20).toMillis());
+    private static final int REQUEST_TIMEOUT = Math.toIntExact(Duration.ofSeconds(120).toMillis());
 
     private final ProxyService proxyService;
 
@@ -48,12 +48,11 @@ public class ValidateServiceImpl implements ValidateService {
      */
     private boolean checkProxy(final Proxy proxy) {
 
-        log.info("Checking proxy: {}", proxy.getValue());
+        log.info("Checking proxy: {}", proxy.toString());
 
         try (final var httpClient = getHttpClient(proxy, getRequestConfig())) {
             try (final var response = httpClient.execute(new HttpGet(TEST_ENDPOINT))) {
-                final int statusCode = response.getStatusLine().getStatusCode();
-                return statusCode == HttpStatus.SC_OK;
+                return response.getStatusLine().getStatusCode() == HttpStatus.SC_OK;
             }
         } catch (final Exception exception) {
             return false;
@@ -68,7 +67,7 @@ public class ValidateServiceImpl implements ValidateService {
         return HttpClientBuilder
                 .create()
                 .disableAutomaticRetries()
-                .setProxy(new HttpHost(proxy.host(), proxy.port()))
+                .setProxy(new HttpHost(proxy.getHost(), proxy.getPort()))
                 .setDefaultRequestConfig(requestConfig).build();
     }
 

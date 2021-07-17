@@ -47,6 +47,9 @@ public class ValidateServiceImpl implements ValidateService {
      * If any errors at all occur (timeout, unknown host etc) assume the proxy to be dead and return false.
      */
     private boolean checkProxy(final Proxy proxy) {
+
+        log.info("Checking proxy: {}", proxy.getValue());
+
         try (final var httpClient = getHttpClient(proxy, getRequestConfig())) {
             try (final var response = httpClient.execute(new HttpGet(TEST_ENDPOINT))) {
                 final int statusCode = response.getStatusLine().getStatusCode();

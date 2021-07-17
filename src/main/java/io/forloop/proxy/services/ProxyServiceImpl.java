@@ -24,11 +24,19 @@ public class ProxyServiceImpl implements ProxyService {
     private final ProxyRepository repository;
 
     @Override
-    public Proxy leaseProxy() {
+    public Proxy lease() {
         final var first = repository.findFirstByValidatedTrueAndInUseFalse();
         first.setInUse(true);
 
         return repository.save(first);
+    }
+
+    @Override
+    public void release(String id) {
+        repository.findById(id).ifPresent(proxy -> {
+            proxy.setInUse(false);
+            repository.save(proxy);
+        });
     }
 
     @Override

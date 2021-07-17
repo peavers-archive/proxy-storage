@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface ProxyService {
 
-    Proxy leaseProxy();
+    Proxy lease();
+
+    void release(String id);
 
     List<Proxy> findAll();
 
@@ -24,4 +26,6 @@ public interface ProxyService {
     Proxy markValid(Proxy proxy);
 
     Count count();
+
+
 }

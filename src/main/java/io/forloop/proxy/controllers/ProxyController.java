@@ -25,8 +25,13 @@ public class ProxyController {
     }
 
     @GetMapping
-    public Proxy findValid() {
-        return proxyService.leaseProxy();
+    public Proxy lease() {
+        return proxyService.lease();
+    }
+
+    @GetMapping("/release/{id}")
+    public void release(@PathVariable final String id) {
+        proxyService.release(id);
     }
 
     @PostMapping

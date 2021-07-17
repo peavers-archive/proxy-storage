@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,10 +26,13 @@ public class ProxyServiceImpl implements ProxyService {
 
     @Override
     public Proxy lease() {
-        final var first = repository.findFirstByValidatedTrueAndInUseFalse();
-        first.setInUse(true);
+        final var optionalProxy = repository.findFirstByValidatedTrueAndInUseFalse();
 
-        return repository.save(first);
+        final var proxy = optionalProxy.isEmpty() ? repository.findFirstByValidatedFalseAndInUseFalse() : optionalProxy.get();
+
+        proxy.setInUse(true);
+
+        return repository.save(proxy);
     }
 
     @Override

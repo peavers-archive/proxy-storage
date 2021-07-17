@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProxyRepository extends MongoRepository<Proxy, String> {
 
-    Proxy findFirstByValidatedTrue();
+    Proxy findFirstByValidatedTrueAndInUseFalse();
 
     long countAllByValidatedTrue();
 

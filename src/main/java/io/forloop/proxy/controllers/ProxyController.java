@@ -26,7 +26,7 @@ public class ProxyController {
 
     @GetMapping
     public Proxy findValid() {
-        return proxyService.findValid();
+        return proxyService.leaseProxy();
     }
 
     @PostMapping

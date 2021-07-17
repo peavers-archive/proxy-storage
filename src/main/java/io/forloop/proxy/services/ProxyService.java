@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ProxyService {
 
-    Proxy findValid();
+    Proxy leaseProxy();
 
     List<Proxy> findAll();
 

@@ -17,6 +17,8 @@ public class Proxy {
 
     private boolean validated;
 
+    private boolean inUse;
+
     public String host() {
         return this.value.split(":")[0];
     }

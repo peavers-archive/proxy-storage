@@ -12,6 +12,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 
 @Slf4j
@@ -21,7 +22,7 @@ public class ValidateServiceImpl implements ValidateService {
 
     private static final String TEST_ENDPOINT = "https://google.com";
 
-    private static final int REQUEST_TIMEOUT = Math.toIntExact(Duration.ofSeconds(120).toMillis());
+    private static final int REQUEST_TIMEOUT = Math.toIntExact(Duration.ofSeconds(60).toMillis());
 
     private final ProxyService proxyService;
 
@@ -29,9 +30,12 @@ public class ValidateServiceImpl implements ValidateService {
 
     @Override
     public void validate() {
-        proxyService
-                .findAll()
-                .forEach(proxy -> executorService.submit(() -> process(proxy)));
+        final var proxies = proxyService.findAll();
+
+        // Mix them up in case we have a large volume from a bad source
+        Collections.shuffle(proxies);
+
+        proxies.forEach(proxy -> executorService.submit(() -> process(proxy)));
     }
 
     private void process(final Proxy proxy) {

@@ -9,6 +9,8 @@ jobs:
     name: Release to DockerHub
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}
+      DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
 
     steps:
       - name: Checkout master

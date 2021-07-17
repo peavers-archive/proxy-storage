@@ -12,6 +12,6 @@ public class ThreadConfig {
     @Bean
     public ExecutorService executorService() {
 
-        return Executors.newFixedThreadPool(30);
+        return Executors.newFixedThreadPool(5);
     }
 }

@@ -19,9 +19,9 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public class ValidateServiceImpl implements ValidateService {
 
-    private static final String TEST_ENDPOINT = "https://google.co.nz";
+    private static final String TEST_ENDPOINT = "https://google.com";
 
-    private static final int REQUEST_TIMEOUT = Math.toIntExact(Duration.ofSeconds(20).toMillis());
+    private static final int REQUEST_TIMEOUT = Math.toIntExact(Duration.ofSeconds(60).toMillis());
 
     private final ProxyService proxyService;
 

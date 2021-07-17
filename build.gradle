@@ -47,17 +47,13 @@ test {
     useJUnitPlatform()
 }
 
-try {
-    bootBuildImage {
-        imageName = "peavers/proxy-storage:latest"
-        publish = true
-        docker {
-            publishRegistry {
-                username = System.getenv("DOCKER_USER")
-                password = System.getenv("DOCKER_PASS")
-            }
+bootBuildImage {
+    imageName = "peavers/proxy-storage:latest"
+    publish = true
+    docker {
+        publishRegistry {
+            username = System.getenv("DOCKER_USER")
+            password = System.getenv("DOCKER_PASS")
         }
     }
-} catch (Exception ignored) {
-
 }

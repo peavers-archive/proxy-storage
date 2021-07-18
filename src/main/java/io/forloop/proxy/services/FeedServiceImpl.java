@@ -1,7 +1,9 @@
 package io.forloop.proxy.services;
 
 import io.forloop.proxy.domain.Proxy;
+import io.forloop.proxy.properties.Properties;
 import io.forloop.proxy.utils.HttpUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.HttpGet;
@@ -16,9 +18,10 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class AutoProxyImpl implements AutoProxy {
+@RequiredArgsConstructor
+public class FeedServiceImpl implements FeedService {
 
-    private static final String ENDPOINT = "https://www.proxy-list.download/api/v1/get?type=https";
+    private final Properties properties;
 
     @Override
     public List<Proxy> fetch() {
@@ -33,7 +36,7 @@ public class AutoProxyImpl implements AutoProxy {
 
     private String request() {
         try (final var httpClient = HttpUtils.getHttpClient(null)) {
-            try (final var response = httpClient.execute(new HttpGet(ENDPOINT))) {
+            try (final var response = httpClient.execute(new HttpGet(properties.getFeed().getEndpoint()))) {
                 return EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             }
         } catch (final Exception exception) {

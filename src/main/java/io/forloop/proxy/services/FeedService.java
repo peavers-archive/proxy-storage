@@ -4,7 +4,7 @@ import io.forloop.proxy.domain.Proxy;
 
 import java.util.List;
 
-public interface AutoProxy {
+public interface FeedService {
 
     List<Proxy> fetch();
 

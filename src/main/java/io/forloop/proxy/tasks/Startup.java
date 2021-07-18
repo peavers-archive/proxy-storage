@@ -1,6 +1,6 @@
 package io.forloop.proxy.tasks;
 
-import io.forloop.proxy.services.AutoProxy;
+import io.forloop.proxy.services.FeedService;
 import io.forloop.proxy.services.ProxyService;
 import io.forloop.proxy.services.ValidateService;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +17,14 @@ public class Startup {
 
     private final ValidateService validateService;
 
-    private final AutoProxy autoProxy;
+    private final FeedService feedService;
 
     @Scheduled(fixedDelay = 21_600_000) // 6 Hours
     public void process() {
 
         proxyService.deleteAll();
 
-        final var proxies = autoProxy.fetch();
+        final var proxies = feedService.fetch();
 
         validateService.validate(proxies);
     }

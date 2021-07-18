@@ -4,8 +4,8 @@ import io.forloop.proxy.domain.Proxy;
 
 import java.util.List;
 
-public interface ValidateService {
+public interface AutoProxy {
 
-    void validate(List<Proxy> proxies);
+    List<Proxy> fetch();
 
 }

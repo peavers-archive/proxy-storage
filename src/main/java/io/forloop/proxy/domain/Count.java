@@ -15,6 +15,8 @@ public class Count {
 
     private long validatedFalse;
 
+    private long inUse;
+
     private long total;
 
     public long getTotal() {

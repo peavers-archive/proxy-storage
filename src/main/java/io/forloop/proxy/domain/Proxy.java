@@ -21,6 +21,8 @@ public class Proxy {
 
     private boolean inUse;
 
+    private String userAgent;
+
     @Override
     public String toString() {
         return "%s:%d".formatted(this.host, this.port);
